@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class LavaMovement : MonoBehaviour
 {
+    public bool ignorePlayer = false;
     public float lavaOffset;
 
     public float lavaSpeed;
+    public float lavaSpeedAcceleration;
     public UIController ui;
     public Transform player;
     public FloatValue playerHeight;
@@ -24,7 +26,7 @@ public class LavaMovement : MonoBehaviour
     {
         if (constantRise)
         {
-        transform.Translate(Vector2.up * Time.deltaTime * lavaSpeed);
+            ConstantRise();
         }
         else
         {
@@ -34,12 +36,18 @@ public class LavaMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.collider.tag == "Player")
+        if (collision.collider.tag == "Player" && !ignorePlayer)
         {
             FindObjectOfType<AudioManager>().Play("death");
             Time.timeScale = 0;
             ui.OpenDeathScreen();
         }
+    }
+
+    private void ConstantRise()
+    {
+        lavaSpeedAcceleration += Time.deltaTime /200;
+        transform.Translate(Vector2.up * Time.deltaTime * (lavaSpeed + lavaSpeedAcceleration));
     }
 
     private void RiseWithPlayer()

@@ -7,8 +7,11 @@ using TMPro;
 public class UIController : MonoBehaviour
 {
     public GameObject deathScreen;
+    public GameObject shopScreen;
     public TextMeshProUGUI thisScore;
     public FloatValue currentScore;
+
+    public PlayerMovement player;
     public void OpenDeathScreen()
     {
         deathScreen.SetActive(true);
@@ -23,5 +26,25 @@ public class UIController : MonoBehaviour
     {
         Time.timeScale = 1;
         SceneManager.LoadScene("SampleScene");
+    }
+
+    public void OpenShop()
+    {
+        shopScreen.SetActive(true);
+        Time.timeScale = 0;
+        Debug.Log("shop entered");
+    }
+
+    public void CloseShop()
+    {
+        shopScreen.SetActive(false);
+        Time.timeScale = 1;
+        Debug.Log("shop left");
+    }
+
+    public void BuyJumpForce()
+    {
+        Debug.Log("jumpforce bought");
+        player.AddJumpForce();
     }
 }

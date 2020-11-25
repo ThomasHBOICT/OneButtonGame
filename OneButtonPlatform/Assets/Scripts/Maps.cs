@@ -5,22 +5,41 @@ using UnityEngine;
 public class Maps : MonoBehaviour
 {
     public List<Transform> gridStartPoint;
+    public Transform shopPart;
+    public Transform startPart;
     public Transform gameStartPoint;
 
     public bool loadStart = false;
+
+    private int numOfMaps = 4;
 
     private void Start()
     {
         if (loadStart)
         {
-        AddTilemap(gameStartPoint.position);
-
+        LoadStartMap(gameStartPoint.position);
         }
     }
 
-    void AddTilemap(Vector3 spawnposition)
+    public void AddTilemap(Vector3 spawnposition)
     {
-        int index = Random.Range(0, gridStartPoint.Count);
-        Instantiate(gridStartPoint[index], spawnposition, Quaternion.identity);
+        if (numOfMaps == 5)
+        {
+            Debug.Log("load shop...");
+            Instantiate(shopPart, spawnposition, Quaternion.identity);
+            numOfMaps = 0;
+        }
+        else
+        {
+            int index = Random.Range(0, gridStartPoint.Count);
+            Instantiate(gridStartPoint[index], spawnposition, Quaternion.identity);
+            numOfMaps++;
+        }
+        
+    }
+
+    private void LoadStartMap(Vector3 spawnposition)
+    {
+        Instantiate(startPart, spawnposition, Quaternion.identity);
     }
 }

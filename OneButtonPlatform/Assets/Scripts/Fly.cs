@@ -14,11 +14,6 @@ public class Fly : MonoBehaviour
     public SpriteRenderer sprRenderer;
 
     private bool isDead = false;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -36,8 +31,15 @@ public class Fly : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        sprRenderer.flipX = !sprRenderer.flipX;
-        moveSpeed *= -1f;
+        if (collision.gameObject.tag == "Lava")
+        {
+            Destroy(gameObject);
+        }
+        if(collision.gameObject.tag == "Wall")
+        {
+            sprRenderer.flipX = !sprRenderer.flipX;
+            moveSpeed *= -1f;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -48,9 +50,6 @@ public class Fly : MonoBehaviour
             isDead = true;
             ani.SetTrigger("death");
             StartCoroutine("Death");
-        }if (collision.tag == "Lava")
-        {
-            Destroy(gameObject);
         }
     }
 

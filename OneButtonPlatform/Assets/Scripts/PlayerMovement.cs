@@ -125,4 +125,9 @@ public class PlayerMovement : MonoBehaviour
             currentScore.@float = transform.position.y;
         }
     }
+
+    public void AddJumpForce()
+    {
+        jumpForce += 20f;
+    }
 }
